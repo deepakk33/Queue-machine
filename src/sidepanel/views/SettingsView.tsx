@@ -27,9 +27,11 @@ export function SettingsView({
 }) {
   const settings = useSettingsStore((s) => s.settings);
   const save = useSettingsStore((s) => s.save);
+  const reset = useSettingsStore((s) => s.reset);
   const clearAll = useQueueStore((s) => s.clearAll);
 
   const [confirmClear, setConfirmClear] = useState(false);
+  const [confirmReset, setConfirmReset] = useState(false);
 
   return (
     <div className="flex h-full flex-col bg-app">
@@ -98,6 +100,13 @@ export function SettingsView({
               </span>
             ))}
           </div>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => setConfirmReset(true)}
+          >
+            Reset settings to defaults
+          </Button>
         </Section>
 
         <Section title="Danger zone">
@@ -127,6 +136,19 @@ export function SettingsView({
             setConfirmClear(false);
           }}
           onCancel={() => setConfirmClear(false)}
+        />
+      )}
+
+      {confirmReset && (
+        <ConfirmDialog
+          title="Reset settings?"
+          body="This restores delays, retries, and the prompt template to their defaults. Prospects are not affected."
+          confirmLabel="Reset"
+          onConfirm={() => {
+            void reset().then(() => onToast("Settings reset to defaults"));
+            setConfirmReset(false);
+          }}
+          onCancel={() => setConfirmReset(false)}
         />
       )}
     </div>
