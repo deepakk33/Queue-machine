@@ -1,0 +1,114 @@
+<!-- @dsCard group="Modules" viewport="360x640" name="Queue" subtitle="Default view — prospect list with filters and start action" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Queue · DM Queue</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="panel.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  body { margin: 0; display: flex; justify-content: center; padding: 28px; background: var(--surface-sunken); }
+</style>
+</head>
+<body>
+  <div class="panel" data-screen-label="Queue">
+    <!-- Header -->
+    <header class="p-header">
+      <div class="p-brand">
+        <span class="p-mark"><i></i><i></i><i></i></span>
+        <span class="p-brand__name">DM&nbsp;Queue</span>
+      </div>
+      <div class="p-header__actions">
+        <button class="iconbtn" aria-label="Settings"><i class="ico" data-lucide="settings"></i></button>
+        <button class="iconbtn iconbtn--accent" aria-label="Add prospect"><i class="ico" data-lucide="plus"></i></button>
+      </div>
+    </header>
+
+    <!-- Body -->
+    <div class="p-body">
+      <!-- Filter chips -->
+      <div class="p-toolbar" style="overflow-x:auto;">
+        <button class="chip chip--active">All <span class="count">12</span></button>
+        <button class="chip">Pending <span class="count">7</span></button>
+        <button class="chip">Sent <span class="count">3</span></button>
+        <button class="chip">Failed <span class="count">2</span></button>
+      </div>
+
+      <!-- Prospect cards -->
+      <article class="pcard pcard--selected" data-screen-label="Prospect row · selected">
+        <div class="pcard__top">
+          <div style="min-width:0;">
+            <div class="pcard__name">Dana Reed</div>
+            <div class="pcard__sub">VP Growth · Northbeam</div>
+          </div>
+          <span class="badge badge--pending"><span class="dot"></span>pending</span>
+        </div>
+        <div class="pcard__msg">Hi Dana — saw Northbeam just shipped the new attribution view. Curious how your team is thinking about measuring incrementality on it.</div>
+        <div class="pcard__actions">
+          <button class="iconbtn iconbtn--sm" aria-label="Edit"><i class="ico" data-lucide="pencil"></i></button>
+          <button class="iconbtn iconbtn--sm" aria-label="Open profile"><i class="ico" data-lucide="external-link"></i></button>
+          <button class="iconbtn iconbtn--sm iconbtn--danger" aria-label="Delete"><i class="ico" data-lucide="trash-2"></i></button>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <div class="pcard__top">
+          <div style="min-width:0;">
+            <div class="pcard__name">Marcus Liang</div>
+            <div class="pcard__sub">Head of RevOps · Tessell</div>
+          </div>
+          <span class="badge badge--sent"><span class="dot"></span>sent</span>
+        </div>
+        <div class="pcard__msg">Marcus — quick one. We built a thing that cuts RevOps reporting from hours to minutes. Worth a look?</div>
+      </article>
+
+      <article class="pcard">
+        <div class="pcard__top">
+          <div style="min-width:0;">
+            <div class="pcard__name">Priya Anand</div>
+            <div class="pcard__sub">Founder · Loophole AI</div>
+          </div>
+          <span class="badge badge--failed"><span class="dot"></span>failed</span>
+        </div>
+        <div class="pcard__msg pcard__msg--empty">No message</div>
+        <div class="pcard__fail"><i class="ico" data-lucide="triangle-alert"></i>Composer did not open</div>
+        <div class="pcard__actions">
+          <button class="iconbtn iconbtn--sm" aria-label="Retry"><i class="ico" data-lucide="rotate-ccw"></i></button>
+          <button class="iconbtn iconbtn--sm" aria-label="Edit"><i class="ico" data-lucide="pencil"></i></button>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <div class="pcard__top">
+          <div style="min-width:0;">
+            <div class="pcard__name">Sam Cole</div>
+            <div class="pcard__sub">Director of Sales · Verda</div>
+          </div>
+          <span class="badge badge--skipped"><span class="dot"></span>skipped</span>
+        </div>
+        <div class="pcard__msg">Sam, noticed Verda is hiring 4 AEs this quarter. Usually means ramp pain. Mind if I share how teams your size handle it?</div>
+      </article>
+
+      <article class="pcard">
+        <div class="pcard__top">
+          <div style="min-width:0;">
+            <div class="pcard__name">Elena Vasquez</div>
+            <div class="pcard__sub">CMO · Brightwave</div>
+          </div>
+          <span class="badge badge--pending"><span class="dot"></span>pending</span>
+        </div>
+        <div class="pcard__msg pcard__msg--empty">No message</div>
+      </article>
+    </div>
+
+    <!-- Footer action bar -->
+    <footer class="p-footer">
+      <button class="btn btn--primary btn--full"><i class="ico" data-lucide="play"></i>Start sending · 5 ready</button>
+    </footer>
+  </div>
+
+  <script>lucide.createIcons({ attrs: { 'stroke-width': 1.75 } });</script>
+</body>
+</html>

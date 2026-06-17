@@ -1,12 +1,26 @@
-import { SendEngineState, type SendProgress as Progress } from "../../shared/types";
+import { Pause, Play, Square } from "lucide-react";
+import {
+  ProspectStatus,
+  SendEngineState,
+  type LogEntry,
+  type SendProgress as Progress,
+} from "../../shared/types";
 import { ProgressBar } from "../components/ProgressBar";
+import { StatusBadge } from "../components/StatusBadge";
+import { Button } from "../components/Button";
 
-const LOG_COLORS: Record<string, string> = {
-  info: "text-gray-600",
-  success: "text-green-700",
-  error: "text-red-700",
-  warning: "text-amber-700",
+const LOG_COLORS: Record<LogEntry["type"], string> = {
+  info: "text-stone-500",
+  success: "text-emerald-600",
+  error: "text-red-600",
+  warning: "text-amber-600",
 };
+
+function clock(ts: number): string {
+  const d = new Date(ts);
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+}
 
 export function SendProgress({
   progress,
@@ -24,71 +38,90 @@ export function SendProgress({
   const done = progress.sentCount + progress.skippedCount;
 
   return (
-    <div className="flex h-full flex-col">
-      <header className="border-b border-gray-200 p-3">
-        <h2 className="text-sm font-semibold">Sending</h2>
-        <p className="mt-1 text-xs text-gray-500">
-          {progress.currentIndex} of {progress.totalCount}
-          {progress.currentProspectName
-            ? ` · ${progress.currentProspectName}`
-            : ""}
-        </p>
+    <div className="flex h-full flex-col bg-app">
+      <header className="flex items-center justify-between border-b border-stone-200 px-3.5 py-2.5">
+        <h2 className="font-display text-lg font-medium text-stone-900">
+          {paused ? "Paused" : "Sending"}
+        </h2>
+        <StatusBadge
+          status={paused ? ProspectStatus.PENDING : ProspectStatus.SENDING}
+        />
       </header>
 
-      <div className="space-y-3 p-3">
-        <ProgressBar value={done} max={progress.totalCount} />
+      <div className="space-y-3 px-3.5 py-3.5">
+        <div className="flex items-end justify-between">
+          <div className="mono text-2xl font-medium text-stone-900">
+            {progress.currentIndex}
+            <span className="text-stone-400"> / {progress.totalCount}</span>
+          </div>
+          <span className="text-xs text-stone-500">in this run</span>
+        </div>
+        <ProgressBar value={done} max={progress.totalCount} showLabel />
 
-        <div className="grid grid-cols-3 gap-2 text-center text-xs">
-          <Stat label="Sent" value={progress.sentCount} color="text-green-700" />
-          <Stat label="Failed" value={progress.failedCount} color="text-red-700" />
-          <Stat
-            label="Skipped"
-            value={progress.skippedCount}
-            color="text-amber-700"
-          />
+        <div className="rounded-lg border border-stone-200 bg-surface-card p-3">
+          <p className="text-xs font-semibold uppercase tracking-caps text-stone-400">
+            {waiting ? "Waiting" : "Now sending"}
+          </p>
+          {waiting ? (
+            <p className="mono mt-1 text-md text-sky-700">
+              next in {progress.waitingSecondsRemaining}s
+            </p>
+          ) : (
+            <p className="mt-1 truncate text-md font-medium text-stone-900">
+              {progress.currentProspectName ?? "—"}
+            </p>
+          )}
         </div>
 
-        {waiting && (
-          <p className="text-center text-xs text-blue-600">
-            Waiting {progress.waitingSecondsRemaining}s before next send…
-          </p>
-        )}
-
-        <div className="flex gap-2">
-          {paused ? (
-            <button
-              className="flex-1 rounded-md bg-blue-600 px-2 py-1.5 text-xs font-medium text-white"
-              onClick={onResume}
-            >
-              Resume
-            </button>
-          ) : (
-            <button
-              className="flex-1 rounded-md border border-gray-300 px-2 py-1.5 text-xs font-medium hover:bg-gray-50"
-              onClick={onPause}
-            >
-              Pause
-            </button>
-          )}
-          <button
-            className="flex-1 rounded-md border border-red-300 px-2 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
-            onClick={onStop}
-          >
-            Stop
-          </button>
+        <div className="grid grid-cols-3 gap-2">
+          <Stat label="sent" value={progress.sentCount} color="text-emerald-700" />
+          <Stat label="failed" value={progress.failedCount} color="text-red-700" />
+          <Stat label="skipped" value={progress.skippedCount} color="text-amber-700" />
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto border-t border-gray-200 p-3">
-        <p className="mb-1 text-xs font-medium text-gray-500">Activity</p>
-        <ul className="space-y-1">
+      <div className="flex-1 overflow-y-auto border-t border-stone-100 px-3.5 py-3">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-caps text-stone-400">
+          Activity
+        </p>
+        <ul className="space-y-1.5">
           {[...progress.log].reverse().map((entry, i) => (
-            <li key={i} className={`text-xs ${LOG_COLORS[entry.type]}`}>
-              {entry.message}
+            <li key={i} className="flex gap-2 text-xs">
+              <span className="mono shrink-0 text-2xs text-stone-400">
+                {clock(entry.timestamp)}
+              </span>
+              <span className={LOG_COLORS[entry.type]}>{entry.message}</span>
             </li>
           ))}
         </ul>
       </div>
+
+      <footer className="flex gap-2 border-t border-stone-200 px-3.5 py-3">
+        {paused ? (
+          <Button size="lg" fullWidth icon={<Play size={15} />} onClick={onResume}>
+            Resume
+          </Button>
+        ) : (
+          <Button
+            variant="secondary"
+            size="lg"
+            fullWidth
+            icon={<Pause size={15} />}
+            onClick={onPause}
+          >
+            Pause
+          </Button>
+        )}
+        <Button
+          variant="danger-ghost"
+          size="lg"
+          fullWidth
+          icon={<Square size={14} />}
+          onClick={onStop}
+        >
+          Stop
+        </Button>
+      </footer>
     </div>
   );
 }
@@ -103,9 +136,9 @@ function Stat({
   color: string;
 }) {
   return (
-    <div className="rounded-md bg-gray-50 py-2">
-      <div className={`text-base font-semibold ${color}`}>{value}</div>
-      <div className="text-gray-500">{label}</div>
+    <div className="rounded-md bg-surface-sunken py-2 text-center">
+      <div className={`mono text-lg font-semibold ${color}`}>{value}</div>
+      <div className="text-2xs text-stone-500">{label}</div>
     </div>
   );
 }

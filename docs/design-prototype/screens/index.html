@@ -1,0 +1,53 @@
+<!-- @dsCard group="Modules" viewport="1280x720" name="All modules" subtitle="The five side-panel modules side by side" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DM Queue · Modules</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-sunken); font-family: var(--font-sans); }
+  .wrap { padding: 40px 36px 56px; }
+  .head { max-width: 1200px; margin: 0 auto 32px; }
+  .head h1 { font-family: var(--font-display); font-size: 30px; font-weight: 500; letter-spacing: 0; color: var(--text-strong); margin-bottom: 8px; }
+  .head p { font-size: var(--text-base); color: var(--text-muted); max-width: 560px; line-height: var(--leading-normal); }
+  .rail { display: flex; gap: 28px; overflow-x: auto; padding: 4px 4px 24px; max-width: 1200px; margin: 0 auto; }
+  .frame { flex-shrink: 0; display: flex; flex-direction: column; gap: 12px; }
+  .frame__label { display: flex; align-items: baseline; gap: 8px; padding-left: 4px; }
+  .frame__num { font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--text-subtle); }
+  .frame__name { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-body); }
+  iframe { width: 360px; height: 640px; border: 0; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); background: var(--bg-app); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <h1>Side-panel modules</h1>
+      <p>The complete LinkedIn DM Queue interface — five screens that live in a fixed 360&nbsp;px Chrome side panel. Built in HTML/CSS against the system tokens.</p>
+    </div>
+    <div class="rail">
+      <div class="frame">
+        <div class="frame__label"><span class="frame__num">01</span><span class="frame__name">Queue</span></div>
+        <iframe src="queue.html" title="Queue"></iframe>
+      </div>
+      <div class="frame">
+        <div class="frame__label"><span class="frame__num">02</span><span class="frame__name">Add prospect</span></div>
+        <iframe src="add-prospect.html" title="Add prospect"></iframe>
+      </div>
+      <div class="frame">
+        <div class="frame__label"><span class="frame__num">03</span><span class="frame__name">Send progress</span></div>
+        <iframe src="send-progress.html" title="Send progress"></iframe>
+      </div>
+      <div class="frame">
+        <div class="frame__label"><span class="frame__num">04</span><span class="frame__name">Run summary</span></div>
+        <iframe src="run-summary.html" title="Run summary"></iframe>
+      </div>
+      <div class="frame">
+        <div class="frame__label"><span class="frame__num">05</span><span class="frame__name">Settings</span></div>
+        <iframe src="settings.html" title="Settings"></iframe>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

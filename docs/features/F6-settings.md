@@ -28,6 +28,8 @@ Side-panel local read/write via `src/db/settings.ts` + `useSettings` hook / `set
 - `views/SettingsView.tsx` — delay min/max inputs, max-retries input, auto-retry toggle, prompt-template `<textarea>` with token reference, "Clear All Data" button.
 - `components/ConfirmDialog.tsx` — clear-data confirmation.
 
+**Design reference** ([design system](architecture/02-design-system.md)): screen [settings.html](../design-prototype/screens/settings.html); components [Input](../design-prototype/components/forms/Input.jsx) (delays/retries), [Switch](../design-prototype/components/forms/Switch.jsx) (auto-retry), [Textarea](../design-prototype/components/forms/Textarea.jsx) (prompt template), [Dialog](../design-prototype/components/feedback/Dialog.jsx) (danger confirm: "Clear all data? …cannot be undone."), [Button](../design-prototype/components/core/Button.jsx) (danger variant).
+
 ## 6. Edge cases / empty states / error states
 
 - `minDelay > maxDelay` → validate/swap or clamp before save.

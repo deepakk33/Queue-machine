@@ -37,6 +37,8 @@ Manual retry: Panel → Worker `RETRY_PROSPECT { prospectId }` / `RETRY_ALL_FAIL
 - `views/RunSummary.tsx` — "Retry All Failed" (see [F5](F5-run-summary.md)).
 - `components/StatusBadge.tsx` — `failed` (red), `skipped` (amber).
 
+**Design reference** ([design system](architecture/02-design-system.md)): screens [run-summary.html](../design-prototype/screens/run-summary.html) (failed-items list) + [queue.html](../design-prototype/screens/queue.html) (per-row retry); components [StatusBadge](../design-prototype/components/feedback/StatusBadge.jsx) (`failed`=terracotta `--status-failed-*`, `skipped`=amber `--status-skipped-*`), [Button](../design-prototype/components/core/Button.jsx) (Retry). Failure reasons surfaced verbatim, never a stack trace.
+
 ## 6. Edge cases / empty states / error states
 
 - `maxRetries: 0` → no auto-retry; first failure goes straight to `skipped`.

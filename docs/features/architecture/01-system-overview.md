@@ -70,3 +70,4 @@ Full risk table: requirements §13.
 | [F4 — Failure & Retry](../F4-failure-retry.md) | retryCount, auto-retry, skip, manual retry |
 | [F5 — Run Summary](../F5-run-summary.md) | Post-run totals + failed list + retry all |
 | [F6 — Settings](../F6-settings.md) | Delays, retries, prompt template, clear data |
+| [02 — Design System](02-design-system.md) | Visual language "Queue" — tokens, components, screen mockups (Figma replacement) |

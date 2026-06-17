@@ -11,17 +11,17 @@ React 18 · Zustand 4 · Tailwind 3 · Dexie.js 4 (IndexedDB) · Vite 5 + CRXJS 
 ## Develop
 
 ```bash
-npm install
-npm run dev      # Vite dev server with HMR
-npm run build    # production bundle → dist/
-npm run typecheck
+pnpm install
+pnpm dev         # Vite dev server with HMR
+pnpm build       # production bundle → dist/
+pnpm typecheck
 ```
 
 ## Load in Chrome
 
 1. Open `chrome://extensions/`
 2. Enable **Developer mode**
-3. Click **Load unpacked** and select the `dist/` folder (run `npm run build` first; in dev, CRXJS also serves a loadable build).
+3. Click **Load unpacked** and select the `dist/` folder (run `pnpm build` first; in dev, CRXJS also serves a loadable build).
 4. The extension icon appears in the toolbar — click it to open the side panel.
 
 Content-script changes may need a page refresh on LinkedIn; service-worker changes may need **Update** on the extensions page.

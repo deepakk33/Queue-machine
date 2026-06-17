@@ -1,0 +1,23 @@
+<!-- @dsCard group="Spacing" viewport="700x150" name="Radius" subtitle="Gentle corners — 4px chips up to 14px dialogs" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 20px 22px; background: var(--surface-card); display:flex; gap:20px; align-items:flex-end; }
+  .item { display:flex; flex-direction:column; gap:8px; align-items:center; }
+  .box { width: 76px; height: 56px; background: var(--surface-sunken); border:1px solid var(--border-default); }
+  .lab { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-muted); }
+  .pill { width:76px; height:30px; border-radius: var(--radius-pill); background:var(--accent-weak); border:1px solid var(--blue-200); }
+</style>
+</head>
+<body>
+  <div class="item"><div class="box" style="border-radius:var(--radius-xs)"></div><span class="lab">xs · 4</span></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-sm)"></div><span class="lab">sm · 6</span></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-md)"></div><span class="lab">md · 8</span></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-lg)"></div><span class="lab">lg · 10</span></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-xl)"></div><span class="lab">xl · 14</span></div>
+  <div class="item"><div class="pill"></div><span class="lab">pill</span></div>
+</body>
+</html>

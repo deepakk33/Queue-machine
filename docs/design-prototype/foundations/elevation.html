@@ -1,0 +1,21 @@
+<!-- @dsCard group="Spacing" viewport="700x170" name="Elevation" subtitle="Soft, slate-tinted shadows — borders first, shadows rare" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 26px 22px; background: var(--bg-app); display:flex; gap:26px; align-items:center; }
+  .item { display:flex; flex-direction:column; gap:12px; align-items:center; }
+  .box { width: 108px; height: 64px; background: var(--surface-card); border-radius: var(--radius-md); border:1px solid var(--border-default); }
+  .lab { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+  <div class="item"><div class="box" style="box-shadow:var(--shadow-xs)"></div><span class="lab">xs · cards</span></div>
+  <div class="item"><div class="box" style="box-shadow:var(--shadow-sm)"></div><span class="lab">sm · hover</span></div>
+  <div class="item"><div class="box" style="box-shadow:var(--shadow-md)"></div><span class="lab">md · menu / toast</span></div>
+  <div class="item"><div class="box" style="box-shadow:var(--shadow-lg)"></div><span class="lab">lg · dialog</span></div>
+  <div class="item"><div class="box" style="box-shadow:var(--shadow-focus);border-color:var(--border-focus)"></div><span class="lab">focus ring</span></div>
+</body>
+</html>

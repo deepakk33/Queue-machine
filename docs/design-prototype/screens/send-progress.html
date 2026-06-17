@@ -1,0 +1,87 @@
+<!-- @dsCard group="Modules" viewport="360x640" name="Send progress" subtitle="Live run dashboard — counter, progress, countdown, activity log" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sending · DM Queue</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="panel.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  body { margin: 0; display: flex; justify-content: center; padding: 28px; background: var(--surface-sunken); }
+  .run-hero { display:flex; flex-direction:column; gap: var(--space-5); padding: var(--space-6) 0 var(--space-8); }
+  .run-counter { display:flex; align-items:baseline; gap:8px; white-space:nowrap; }
+  .run-counter b { font-family: var(--font-mono); font-size: var(--text-2xl); font-weight:700; color: var(--text-strong); font-variant-numeric: tabular-nums; line-height:1; }
+  .run-counter span { font-size: var(--text-sm); color: var(--text-muted); }
+  .run-now { display:flex; align-items:center; gap:8px; padding: 10px 12px; background: var(--surface-card); border:1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-xs); }
+  .run-now__name { font-size: var(--text-md); font-weight: var(--weight-semibold); color: var(--text-strong); }
+  .run-now__step { font-size: var(--text-xs); color: var(--text-muted); margin-top:1px; }
+  .tally { display:flex; gap: var(--space-5); margin-top: var(--space-6); }
+  .tally div { flex:1; display:flex; flex-direction:column; gap:2px; padding:9px 10px; background: var(--surface-card); border:1px solid var(--border-subtle); border-radius: var(--radius-md); }
+  .tally b { font-family: var(--font-mono); font-size: var(--text-lg); font-weight:700; }
+  .tally span { font-size: var(--text-2xs); color: var(--text-muted); }
+  .countdown { display:flex; align-items:center; justify-content:center; gap:8px; padding: 9px; margin-top: var(--space-6); background: var(--status-sending-bg); border-radius: var(--radius-md); color: var(--status-sending-fg); font-size: var(--text-sm); font-weight: var(--weight-medium); }
+  .countdown .t { font-family: var(--font-mono); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .log { margin-top: var(--space-8); display:flex; flex-direction:column; gap:11px; }
+  .log__line { display:flex; gap:9px; font-size: var(--text-sm); line-height: var(--leading-snug); }
+  .log__line .ts { font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--text-subtle); flex-shrink:0; padding-top:2px; width:30px; }
+  .log__line .msg { flex:1; min-width:0; }
+  .log__line.info .msg { color: var(--text-body); }
+  .log__line.success .msg { color: var(--log-success); }
+  .log__line.error .msg { color: var(--log-error); }
+  .log__line.warning .msg { color: var(--log-warning); }
+</style>
+</head>
+<body>
+  <div class="panel" data-screen-label="Send progress">
+    <header class="p-header">
+      <span class="badge badge--sending" style="font-size:var(--text-sm);"><span class="dot"></span>Sending</span>
+      <div class="p-header__actions" style="margin-left:auto;">
+        <span class="mono" style="font-size:var(--text-xs);color:var(--text-muted);">run · 03:41</span>
+      </div>
+    </header>
+
+    <div class="p-body">
+      <div class="run-hero">
+        <div class="run-counter"><b>4</b><span>of 12 prospects</span></div>
+        <div style="height:6px;background:var(--surface-sunken);border-radius:var(--radius-pill);overflow:hidden;">
+          <span style="display:block;width:33%;height:100%;background:var(--accent);border-radius:var(--radius-pill);"></span>
+        </div>
+      </div>
+
+      <div class="run-now">
+        <span class="badge badge--sending"><span class="dot"></span></span>
+        <div style="min-width:0;flex:1;">
+          <div class="run-now__name">Sam Cole</div>
+          <div class="run-now__step">Typing message into composer…</div>
+        </div>
+      </div>
+
+      <div class="tally">
+        <div><b style="color:var(--status-sent-fg);">3</b><span>sent</span></div>
+        <div><b style="color:var(--status-failed-fg);">1</b><span>failed</span></div>
+        <div><b style="color:var(--status-skipped-fg);">0</b><span>skipped</span></div>
+      </div>
+
+      <div class="log">
+        <span class="eyebrow" style="margin-bottom:2px;">Activity</span>
+        <div class="log__line info"><span class="ts">03:38</span><span class="msg">Opened profile for Sam Cole</span></div>
+        <div class="log__line success"><span class="ts">03:30</span><span class="msg">Message sent to Marcus Liang</span></div>
+        <div class="log__line info"><span class="ts">03:30</span><span class="msg">Waiting 84s before next send…</span></div>
+        <div class="log__line error"><span class="ts">02:02</span><span class="msg">Failed: Priya Anand — Composer did not open</span></div>
+        <div class="log__line warning"><span class="ts">02:02</span><span class="msg">Re-queued Priya Anand for retry (attempt 1)</span></div>
+        <div class="log__line success"><span class="ts">01:14</span><span class="msg">Message sent to Dana Reed</span></div>
+        <div class="log__line info"><span class="ts">00:48</span><span class="msg">Send run started · 12 prospects</span></div>
+      </div>
+    </div>
+
+    <footer class="p-footer">
+      <button class="btn btn--secondary" style="flex:1;"><i class="ico" data-lucide="pause"></i>Pause</button>
+      <button class="btn btn--danger-ghost" style="flex:1;"><i class="ico" data-lucide="square"></i>Stop</button>
+    </footer>
+  </div>
+
+  <script>lucide.createIcons({ attrs: { 'stroke-width': 1.75 } });</script>
+</body>
+</html>

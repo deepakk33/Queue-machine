@@ -1,0 +1,85 @@
+<!-- @dsCard group="Modules" viewport="360x640" name="Add prospect" subtitle="Form with Copy Context / Paste Message clipboard flow" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add prospect · DM Queue</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="panel.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  body { margin: 0; display: flex; justify-content: center; padding: 28px; background: var(--surface-sunken); }
+  .clip-actions { display: flex; gap: var(--space-3); margin-top: var(--space-3); }
+  .clip-actions .btn { flex: 1; }
+</style>
+</head>
+<body>
+  <div class="panel" data-screen-label="Add prospect">
+    <header class="p-header">
+      <button class="p-header__back" aria-label="Back"><i class="ico" data-lucide="arrow-left" style="width:18px;height:18px;"></i></button>
+      <span class="p-title p-title--sm">Add prospect</span>
+    </header>
+
+    <div class="p-body">
+      <div class="field">
+        <label class="field__label">Full name<span class="req">*</span></label>
+        <div class="control"><input value="Dana Reed" /></div>
+      </div>
+
+      <div class="field">
+        <label class="field__label">Profile URL<span class="req">*</span></label>
+        <div class="control control--mono"><i class="ico" data-lucide="link"></i><input value="linkedin.com/sales/lead/ACw…" /></div>
+      </div>
+
+      <div class="field">
+        <label class="field__label">Designation</label>
+        <div class="control"><input value="VP Growth" /></div>
+      </div>
+
+      <div class="field">
+        <label class="field__label">Company</label>
+        <div class="control"><input value="Northbeam" /></div>
+      </div>
+
+      <div class="field">
+        <label class="field__label">Company URL</label>
+        <div class="control control--mono"><i class="ico" data-lucide="globe"></i><input value="northbeam.io" /></div>
+      </div>
+
+      <div class="field">
+        <label class="field__label">Notes <span style="font-weight:400;color:var(--text-subtle);">— context for the AI prompt</span></label>
+        <textarea class="control" rows="3">Just shipped a new attribution view. Series B, scaling the GTM team. Active on LinkedIn.</textarea>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Clipboard AI flow -->
+      <div class="section">
+        <div class="section__head">
+          <span class="eyebrow">Compose message</span>
+          <span class="mono" style="font-size:var(--text-2xs);color:var(--text-subtle);">via clipboard + AI</span>
+        </div>
+        <div class="clip-actions">
+          <button class="btn btn--secondary"><i class="ico" data-lucide="clipboard"></i>Copy context</button>
+          <button class="btn btn--secondary"><i class="ico" data-lucide="clipboard-paste"></i>Paste message</button>
+        </div>
+        <div class="field" style="margin-top:var(--space-5);">
+          <div class="field__row">
+            <label class="field__label">Message</label>
+            <span class="field__count">218/500</span>
+          </div>
+          <textarea class="control" rows="4">Hi Dana — saw Northbeam just shipped the new attribution view. Curious how your team is thinking about measuring incrementality on it. We help GTM teams pressure-test exactly that. Worth a quick look?</textarea>
+        </div>
+      </div>
+    </div>
+
+    <footer class="p-footer">
+      <button class="btn btn--ghost">Cancel</button>
+      <button class="btn btn--primary" style="flex:1;"><i class="ico" data-lucide="check"></i>Save prospect</button>
+    </footer>
+  </div>
+
+  <script>lucide.createIcons({ attrs: { 'stroke-width': 1.75 } });</script>
+</body>
+</html>

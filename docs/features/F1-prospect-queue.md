@@ -44,6 +44,8 @@ Prospect CRUD is local to the side panel — no cross-context messaging. Side pa
 - `components/ProspectCard.tsx` — single row: name, company, status badge, truncated message preview ("No message" when empty).
 - `components/StatusBadge.tsx`, `components/ConfirmDialog.tsx` (bulk clear).
 
+**Design reference** ([design system](architecture/02-design-system.md)): screen [queue.html](../design-prototype/screens/queue.html); components [ProspectCard](../design-prototype/components/data/ProspectCard.jsx), [StatusBadge](../design-prototype/components/feedback/StatusBadge.jsx), [Button](../design-prototype/components/core/Button.jsx)/[IconButton](../design-prototype/components/core/IconButton.jsx), [Dialog](../design-prototype/components/feedback/Dialog.jsx) (bulk clear), [Input](../design-prototype/components/forms/Input.jsx) (filter).
+
 ## 6. Edge cases / empty states / error states
 
 - Empty queue → QueueView shows an empty state prompting "Add Prospect".

@@ -15,7 +15,8 @@ export function Toast({
   }, [message, duration, onDone]);
 
   return (
-    <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-md bg-gray-900 px-3 py-2 text-xs text-white shadow-lg">
+    <div className="fixed bottom-4 left-1/2 z-50 flex max-w-[320px] -translate-x-1/2 animate-dmq-pop items-center gap-2 rounded-md bg-stone-900 px-3 py-2 text-xs text-stone-0 shadow-lg">
+      <span className="h-[7px] w-[7px] shrink-0 rounded-pill bg-accent" />
       {message}
     </div>
   );

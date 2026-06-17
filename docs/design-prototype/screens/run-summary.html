@@ -1,0 +1,93 @@
+<!-- @dsCard group="Modules" viewport="360x640" name="Run summary" subtitle="Post-run results with failed items and Retry all" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Run summary · DM Queue</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="panel.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  body { margin: 0; display: flex; justify-content: center; padding: 28px; background: var(--surface-sunken); }
+  .done { display:flex; flex-direction:column; align-items:center; text-align:center; gap: var(--space-4); padding: var(--space-8) 0 var(--space-6); }
+  .done__check { width:44px; height:44px; border-radius:50%; background: var(--status-sent-bg); color: var(--status-sent-fg); display:flex; align-items:center; justify-content:center; }
+  .done__check .ico { width:24px; height:24px; }
+  .done h2 { font-family: var(--font-display); font-size: 23px; font-weight: 500; letter-spacing: 0; color: var(--text-strong); }
+  .done p { font-size: var(--text-sm); color: var(--text-muted); }
+  .done p .mono { color: var(--text-body); font-weight:600; }
+  .stats { display:flex; gap: var(--space-5); margin: var(--space-6) 0 var(--space-8); }
+  .stat { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding: 12px 8px; border-radius: var(--radius-lg); border:1px solid var(--border-subtle); background: var(--surface-card); }
+  .stat b { font-family: var(--font-mono); font-size: var(--text-2xl); font-weight:700; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: var(--text-2xs); color: var(--text-muted); text-transform:uppercase; letter-spacing: var(--tracking-caps); }
+  .fail-item { display:flex; align-items:flex-start; gap:9px; padding: 10px 12px; background: var(--surface-card); border:1px solid var(--border-default); border-radius: var(--radius-md); }
+  .fail-item + .fail-item { margin-top: var(--space-3); }
+  .fail-item .ico { width:15px; height:15px; color: var(--red-500); flex-shrink:0; margin-top:1px; }
+  .fail-item__name { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-strong); }
+  .fail-item__reason { font-size: var(--text-xs); color: var(--red-600); margin-top:1px; }
+  .fail-item .iconbtn { margin-left:auto; }
+</style>
+</head>
+<body>
+  <div class="panel" data-screen-label="Run summary">
+    <header class="p-header">
+      <button class="p-header__back" aria-label="Back to queue"><i class="ico" data-lucide="arrow-left" style="width:18px;height:18px;"></i></button>
+      <span class="p-title p-title--sm">Run summary</span>
+    </header>
+
+    <div class="p-body">
+      <div class="done">
+        <div class="done__check"><i class="ico" data-lucide="check"></i></div>
+        <h2>Run complete</h2>
+        <p>Processed <span class="mono">12</span> prospects in <span class="mono">14m 22s</span></p>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b style="color:var(--status-sent-fg);">9</b><span>sent</span></div>
+        <div class="stat"><b style="color:var(--status-failed-fg);">2</b><span>failed</span></div>
+        <div class="stat"><b style="color:var(--status-skipped-fg);">1</b><span>skipped</span></div>
+      </div>
+
+      <div class="section">
+        <div class="section__head">
+          <span class="eyebrow">Needs attention · 3</span>
+        </div>
+
+        <div class="fail-item">
+          <i class="ico" data-lucide="x-circle"></i>
+          <div style="min-width:0;">
+            <div class="fail-item__name">Priya Anand</div>
+            <div class="fail-item__reason">Composer did not open</div>
+          </div>
+          <button class="iconbtn iconbtn--sm" aria-label="Retry Priya Anand"><i class="ico" data-lucide="rotate-ccw"></i></button>
+        </div>
+
+        <div class="fail-item">
+          <i class="ico" data-lucide="x-circle"></i>
+          <div style="min-width:0;">
+            <div class="fail-item__name">Tomás Herrera</div>
+            <div class="fail-item__reason">Page did not load within timeout</div>
+          </div>
+          <button class="iconbtn iconbtn--sm" aria-label="Retry Tomás Herrera"><i class="ico" data-lucide="rotate-ccw"></i></button>
+        </div>
+
+        <div class="fail-item">
+          <i class="ico" data-lucide="corner-down-right" style="color:var(--amber-500);"></i>
+          <div style="min-width:0;">
+            <div class="fail-item__name">Sam Cole</div>
+            <div class="fail-item__reason" style="color:var(--amber-700);">Skipped — max retries reached</div>
+          </div>
+          <button class="iconbtn iconbtn--sm" aria-label="Retry Sam Cole"><i class="ico" data-lucide="rotate-ccw"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="p-footer">
+      <button class="btn btn--secondary" style="flex:1;"><i class="ico" data-lucide="list"></i>Back to queue</button>
+      <button class="btn btn--primary" style="flex:1.4;"><i class="ico" data-lucide="rotate-ccw"></i>Retry all failed</button>
+    </footer>
+  </div>
+
+  <script>lucide.createIcons({ attrs: { 'stroke-width': 1.75 } });</script>
+</body>
+</html>

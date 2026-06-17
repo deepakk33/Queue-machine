@@ -25,6 +25,8 @@ On `complete()`, the engine builds `RunSummary` and broadcasts `SEND_RUN_COMPLET
 
 - `views/RunSummary.tsx` — counts, failed/skipped list with reasons, "Retry All Failed", "Back to Queue".
 
+**Design reference** ([design system](architecture/02-design-system.md)): screen [run-summary.html](../design-prototype/screens/run-summary.html) (big monospace counters, `FAILED ITEMS` eyebrow, "Run complete" in Fraunces); components [StatusBadge](../design-prototype/components/feedback/StatusBadge.jsx), [Button](../design-prototype/components/core/Button.jsx).
+
 ## 6. Edge cases / empty states / error states
 
 - Zero failures → failure list empty; "Retry All Failed" hidden or disabled.

@@ -43,6 +43,8 @@ Per-prospect sequence (technical-design §6.2, §7.3 `executeSend`): navigate �
 - `components/ProgressBar.tsx`.
 - `hooks/useSendState.ts` — subscribes to `SEND_STATE_UPDATE`; on mount sends `GET_SEND_STATE` to reconnect (AC-25).
 
+**Design reference** ([design system](architecture/02-design-system.md)): screen [send-progress.html](../design-prototype/screens/send-progress.html) (live counter, countdown, activity log with `--log-*` severity colors, `sending` dot pulse); components [ProgressBar](../design-prototype/components/feedback/ProgressBar.jsx), [StatusBadge](../design-prototype/components/feedback/StatusBadge.jsx), [Button](../design-prototype/components/core/Button.jsx) (Pause/Stop, sticky footer).
+
 ## 6. Edge cases / empty states / error states
 
 - No eligible prospects → Start disabled; `start()` returns early if queue empty.

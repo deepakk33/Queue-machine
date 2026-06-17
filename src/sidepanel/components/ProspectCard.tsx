@@ -1,4 +1,6 @@
+import { Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { StatusBadge } from "./StatusBadge";
+import { IconButton } from "./IconButton";
 import { ProspectStatus, type Prospect } from "../../shared/types";
 
 export function ProspectCard({
@@ -16,16 +18,19 @@ export function ProspectCard({
   const canRetry =
     prospect.status === ProspectStatus.FAILED ||
     prospect.status === ProspectStatus.SKIPPED;
+  const subtitle = [prospect.designation, prospect.company]
+    .filter(Boolean)
+    .join(" · ");
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-3">
+    <div className="group rounded-lg border border-stone-200 bg-surface-card p-3 transition-[box-shadow,border-color] duration-[120ms] hover:border-stone-300 hover:shadow-sm">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="truncate text-sm font-medium text-gray-900">
+          <p className="truncate text-md font-medium text-stone-900">
             {prospect.name || "(no name)"}
           </p>
-          {prospect.company && (
-            <p className="truncate text-xs text-gray-500">{prospect.company}</p>
+          {subtitle && (
+            <p className="truncate text-xs text-stone-500">{subtitle}</p>
           )}
         </div>
         <StatusBadge status={prospect.status} />
@@ -33,28 +38,28 @@ export function ProspectCard({
 
       <p
         className={`mt-2 line-clamp-2 text-xs ${
-          hasMessage ? "text-gray-600" : "italic text-gray-400"
+          hasMessage ? "text-stone-600" : "italic text-stone-400"
         }`}
       >
-        {hasMessage ? prospect.message : "No message"}
+        {hasMessage ? prospect.message : "no message yet"}
       </p>
 
       {prospect.failureReason && (
-        <p className="mt-1 text-xs text-red-600">{prospect.failureReason}</p>
+        <p className="mt-1.5 text-xs text-red-600">{prospect.failureReason}</p>
       )}
 
-      <div className="mt-2 flex gap-3 text-xs">
-        <button className="text-blue-600 hover:underline" onClick={onEdit}>
-          Edit
-        </button>
+      <div className="mt-2 flex justify-end gap-1 opacity-0 transition-opacity duration-[120ms] group-hover:opacity-100 focus-within:opacity-100">
         {canRetry && (
-          <button className="text-amber-600 hover:underline" onClick={onRetry}>
-            Retry
-          </button>
+          <IconButton variant="accent" size="sm" label="Retry" onClick={onRetry}>
+            <RotateCcw size={14} />
+          </IconButton>
         )}
-        <button className="text-red-600 hover:underline" onClick={onDelete}>
-          Delete
-        </button>
+        <IconButton variant="ghost" size="sm" label="Edit" onClick={onEdit}>
+          <Pencil size={14} />
+        </IconButton>
+        <IconButton variant="danger" size="sm" label="Delete" onClick={onDelete}>
+          <Trash2 size={14} />
+        </IconButton>
       </div>
     </div>
   );

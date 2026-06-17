@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { ArrowLeft, ClipboardPaste, Copy, Link2 } from "lucide-react";
+import type { ReactNode } from "react";
 import type { Prospect } from "../../shared/types";
 import { useQueueStore } from "../../store/queue-store";
 import { useSettingsStore } from "../../store/settings-store";
 import { renderTemplate } from "../../utils/template";
 import { copyToClipboard, readFromClipboard } from "../../utils/clipboard";
+import { IconButton } from "../components/IconButton";
+import { Button } from "../components/Button";
 
 type FormFields = Pick<
   Prospect,
@@ -25,6 +29,8 @@ const EMPTY: FormFields = {
   notes: "",
   message: "",
 };
+
+const MAX_MESSAGE = 500;
 
 export function ProspectForm({
   editing,
@@ -69,7 +75,6 @@ export function ProspectForm({
   };
 
   const handleCopyContext = async () => {
-    // Build a Prospect-shaped object for token rendering.
     const stub: Prospect = {
       ...EMPTY,
       ...fields,
@@ -96,21 +101,27 @@ export function ProspectForm({
     onToast("Message pasted");
   };
 
+  const over = fields.message.length > MAX_MESSAGE;
+
   return (
-    <div className="flex h-full flex-col">
-      <header className="flex items-center justify-between border-b border-gray-200 px-3 py-2">
-        <h2 className="text-sm font-semibold">
-          {editing ? "Edit Prospect" : "Add Prospect"}
+    <div className="flex h-full flex-col bg-app">
+      <header className="flex items-center gap-2 border-b border-stone-200 px-3.5 py-2.5">
+        <IconButton label="Back" onClick={onClose}>
+          <ArrowLeft size={17} />
+        </IconButton>
+        <h2 className="font-display text-lg font-medium text-stone-900">
+          {editing ? "Edit prospect" : "Add prospect"}
         </h2>
-        <button className="text-xs text-gray-500" onClick={onClose}>
-          Cancel
-        </button>
       </header>
 
-      <div className="flex-1 space-y-3 overflow-y-auto p-3">
-        <Field label="Name *" value={fields.name} onChange={(v) => set("name", v)} />
+      <div className="flex-1 space-y-3.5 overflow-y-auto px-3.5 py-3.5">
+        <Field label="Name" required value={fields.name} onChange={(v) => set("name", v)} />
         <Field
-          label="Profile URL *"
+          label="Profile URL"
+          required
+          mono
+          icon={<Link2 size={14} />}
+          placeholder="linkedin.com/sales/lead/…"
           value={fields.profileUrl}
           onChange={(v) => set("profileUrl", v)}
         />
@@ -126,48 +137,71 @@ export function ProspectForm({
         />
         <Field
           label="Company URL"
+          mono
+          icon={<Link2 size={14} />}
           value={fields.companyUrl}
           onChange={(v) => set("companyUrl", v)}
         />
         <Field
           label="Notes"
+          hint="Context for the AI prompt."
           value={fields.notes}
           onChange={(v) => set("notes", v)}
           textarea
         />
 
-        <div className="flex gap-2">
-          <button
-            className="flex-1 rounded-md border border-gray-300 px-2 py-1.5 text-xs font-medium hover:bg-gray-50"
-            onClick={handleCopyContext}
-          >
-            Copy Context
-          </button>
-          <button
-            className="flex-1 rounded-md border border-gray-300 px-2 py-1.5 text-xs font-medium hover:bg-gray-50"
-            onClick={handlePasteMessage}
-          >
-            Paste Message
-          </button>
-        </div>
+        <div className="border-t border-stone-100 pt-3.5">
+          <p className="text-xs font-semibold uppercase tracking-caps text-stone-400">
+            Compose message
+          </p>
+          <div className="mt-2 flex gap-2">
+            <Button
+              variant="secondary"
+              size="sm"
+              fullWidth
+              icon={<Copy size={14} />}
+              onClick={handleCopyContext}
+            >
+              Copy context
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              fullWidth
+              icon={<ClipboardPaste size={14} />}
+              onClick={handlePasteMessage}
+            >
+              Paste message
+            </Button>
+          </div>
 
-        <Field
-          label="Message"
-          value={fields.message}
-          onChange={(v) => set("message", v)}
-          textarea
-          rows={6}
-        />
+          <label className="mt-3 block">
+            <span className="mb-1 flex items-center justify-between">
+              <span className="text-xs font-medium text-stone-700">Message</span>
+              <span className={`mono text-2xs ${over ? "text-red-600" : "text-stone-400"}`}>
+                {fields.message.length} / {MAX_MESSAGE}
+              </span>
+            </span>
+            <textarea
+              className={`w-full resize-y rounded-sm border bg-surface-card px-2.5 py-2 text-sm text-stone-800 placeholder:text-stone-400 focus:outline-none focus:shadow-focus ${
+                over ? "border-red-500" : "border-stone-200 focus:border-accent"
+              }`}
+              rows={6}
+              value={fields.message}
+              placeholder="Paste or write the InMail to send…"
+              onChange={(e) => set("message", e.target.value)}
+            />
+          </label>
+        </div>
       </div>
 
-      <footer className="border-t border-gray-200 p-3">
-        <button
-          className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-gray-300"
-          onClick={handleSave}
-          disabled={!canSave}
-        >
-          Save
-        </button>
+      <footer className="flex gap-2 border-t border-stone-200 px-3.5 py-3">
+        <Button variant="ghost" size="lg" fullWidth onClick={onClose}>
+          Cancel
+        </Button>
+        <Button size="lg" fullWidth onClick={handleSave} disabled={!canSave}>
+          Save prospect
+        </Button>
       </footer>
     </div>
   );
@@ -178,33 +212,50 @@ function Field({
   value,
   onChange,
   textarea,
-  rows = 3,
+  required,
+  mono,
+  icon,
+  hint,
+  placeholder,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   textarea?: boolean;
-  rows?: number;
+  required?: boolean;
+  mono?: boolean;
+  icon?: ReactNode;
+  hint?: string;
+  placeholder?: string;
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs font-medium text-gray-700">
+      <span className="mb-1 block text-xs font-medium text-stone-700">
         {label}
+        {required && <span className="ml-0.5 text-accent">*</span>}
       </span>
       {textarea ? (
         <textarea
-          className="w-full resize-y rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
-          rows={rows}
+          className="w-full resize-y rounded-sm border border-stone-200 bg-surface-card px-2.5 py-2 text-sm text-stone-800 placeholder:text-stone-400 focus:border-accent focus:outline-none focus:shadow-focus"
+          rows={3}
           value={value}
+          placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
         />
       ) : (
-        <input
-          className="w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-        />
+        <div className="flex items-center gap-2 rounded-sm border border-stone-200 bg-surface-card px-2.5 focus-within:border-accent focus-within:shadow-focus">
+          {icon && <span className="text-stone-400">{icon}</span>}
+          <input
+            className={`h-[34px] w-full bg-transparent text-sm text-stone-800 placeholder:text-stone-400 focus:outline-none ${
+              mono ? "mono" : ""
+            }`}
+            value={value}
+            placeholder={placeholder}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        </div>
       )}
+      {hint && <span className="mt-1 block text-2xs text-stone-400">{hint}</span>}
     </label>
   );
 }

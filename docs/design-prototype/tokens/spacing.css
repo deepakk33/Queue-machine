@@ -1,0 +1,30 @@
+/* ============================================================
+   SPACING & SIZING — 4px base grid, tuned for a 360px panel.
+   ============================================================ */
+
+:root {
+  /* Spacing scale */
+  --space-0:  0;
+  --space-1:  2px;
+  --space-2:  4px;
+  --space-3:  6px;
+  --space-4:  8px;
+  --space-5:  10px;
+  --space-6:  12px;
+  --space-8:  16px;
+  --space-10: 20px;
+  --space-12: 24px;
+  --space-16: 32px;
+  --space-20: 40px;
+
+  /* Panel layout */
+  --panel-width:     360px;
+  --panel-gutter:    14px;   /* horizontal padding inside the panel */
+  --header-height:   48px;
+  --row-min-height:  44px;   /* min tap target */
+
+  /* Control heights */
+  --control-sm: 28px;
+  --control-md: 34px;
+  --control-lg: 40px;
+}
