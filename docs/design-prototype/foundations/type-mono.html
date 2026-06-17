@@ -1,0 +1,41 @@
+<!-- @dsCard group="Type" viewport="700x180" name="IBM Plex Mono · data" subtitle="Timers, counts, IDs, URLs and the activity log" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 20px 22px; background: var(--surface-card); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; }
+  .item .lab { font-family: var(--font-sans); font-size: 9.5px; color: var(--text-subtle); margin-bottom: 5px; letter-spacing: var(--tracking-caps); text-transform: uppercase; }
+  .big { font-size: var(--text-2xl); font-weight: 600; color: var(--text-strong); }
+  .mid { font-size: var(--text-base); color: var(--text-body); }
+  .log span { display:block; line-height:1.55; font-size: var(--text-sm); }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="item">
+      <div class="lab">Countdown</div>
+      <div class="big" style="color:var(--sky-700)">00:73</div>
+    </div>
+    <div class="item">
+      <div class="lab">Run counts</div>
+      <div class="big">09<span style="font-size:14px;color:var(--text-subtle)"> sent</span> · 02<span style="font-size:14px;color:var(--text-subtle)"> failed</span></div>
+    </div>
+    <div class="item">
+      <div class="lab">Identifiers / URL</div>
+      <div class="mid">id 4f9c-21ab</div>
+      <div class="mid" style="color:var(--text-link)">linkedin.com/sales/lead/…</div>
+    </div>
+    <div class="item">
+      <div class="lab">Activity log</div>
+      <div class="log">
+        <span style="color:var(--log-success)">✓ Message sent</span>
+        <span style="color:var(--log-info)">· Waiting 73s…</span>
+        <span style="color:var(--log-error)">✕ Composer did not open</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

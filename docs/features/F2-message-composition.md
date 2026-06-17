@@ -35,6 +35,8 @@ Loop: select prospect → Copy Context → (external AI tab) → Paste Message �
 - `views/ProspectForm.tsx` — "Copy Context" + "Paste Message" buttons, message `<textarea>`.
 - `components/Toast.tsx` — clipboard confirmation toast.
 
+**Design reference** ([design system](architecture/02-design-system.md)): screen [add-prospect.html](../design-prototype/screens/add-prospect.html); components [Input](../design-prototype/components/forms/Input.jsx), [Textarea](../design-prototype/components/forms/Textarea.jsx) (with counter), [Button](../design-prototype/components/core/Button.jsx) (Copy Context / Paste Message), [Toast](../design-prototype/components/feedback/Toast.jsx).
+
 ## 6. Edge cases / empty states / error states
 
 - Clipboard API blocked → fall back to `execCommand`; if both fail, surface an error toast (clipboard returns `false` / `null`).

@@ -1,0 +1,146 @@
+/* ============================================================
+   COLORS — LinkedIn DM Queue
+   A warm cream/stone neutral scale, a dusty purple accent, and
+   the five queue status hues (pending / sending / sent / failed
+   / skipped). Base ramps first, semantic aliases below.
+   ============================================================ */
+
+:root {
+  /* ---- Neutral · Warm stone ramp -------------------------- */
+  --stone-0:   #ffffff;
+  --stone-50:  #faf9f5;   /* app ground */
+  --stone-100: #f3f1ea;
+  --stone-200: #e9e5da;
+  --stone-300: #d9d4c6;
+  --stone-400: #aaa491;
+  --stone-500: #7d776a;
+  --stone-600: #5a554b;
+  --stone-700: #423e36;
+  --stone-800: #2a2722;
+  --stone-900: #1b1915;
+
+  /* Back-compat aliases (older specimens reference --slate-*) */
+  --slate-0:   var(--stone-0);
+  --slate-50:  var(--stone-50);
+  --slate-100: var(--stone-100);
+  --slate-200: var(--stone-200);
+  --slate-300: var(--stone-300);
+  --slate-400: var(--stone-400);
+  --slate-500: var(--stone-500);
+  --slate-600: var(--stone-600);
+  --slate-700: var(--stone-700);
+  --slate-800: var(--stone-800);
+  --slate-900: var(--stone-900);
+
+  /* ---- Accent · Dusty purple ------------------------------ */
+  --purple-50:  #f5f2fc;
+  --purple-100: #ece5f9;
+  --purple-200: #ddd1f3;
+  --purple-300: #c4afe9;
+  --purple-400: #a98ddb;
+  --purple-500: #8f6ccb;   /* primary */
+  --purple-600: #7954b4;
+  --purple-700: #614293;
+
+  /* Back-compat: --blue-* now point at the purple ramp */
+  --blue-50:  var(--purple-50);
+  --blue-100: var(--purple-100);
+  --blue-200: var(--purple-200);
+  --blue-300: var(--purple-300);
+  --blue-400: var(--purple-400);
+  --blue-500: var(--purple-500);
+  --blue-600: var(--purple-600);
+  --blue-700: var(--purple-700);
+
+  /* ---- Status · Sending (indigo) -------------------------- */
+  --sky-50:  #eceafb;
+  --sky-100: #d8d4f6;
+  --sky-500: #5a54d6;
+  --sky-600: #4842bc;
+  --sky-700: #3a3699;
+
+  /* ---- Status · Sent (emerald) ---------------------------- */
+  --emerald-50:  #e6f4ec;
+  --emerald-100: #c8e8d5;
+  --emerald-500: #2f9e63;
+  --emerald-600: #258052;
+  --emerald-700: #1e6642;
+
+  /* ---- Status · Failed (terracotta red) ------------------- */
+  --red-50:  #fbeae6;
+  --red-100: #f6d2c9;
+  --red-500: #d65440;
+  --red-600: #be4332;
+  --red-700: #9a3527;
+
+  /* ---- Status · Skipped (amber) --------------------------- */
+  --amber-50:  #f9efd9;
+  --amber-100: #f1ddb0;
+  --amber-500: #c4860f;
+  --amber-600: #a26d0a;
+  --amber-700: #815608;
+
+  /* ========================================================
+     SEMANTIC ALIASES
+     ======================================================== */
+
+  /* Surfaces & background */
+  --bg-app:          var(--stone-50);
+  --surface-card:    var(--stone-0);
+  --surface-raised:  var(--stone-0);
+  --surface-sunken:  var(--stone-100);
+  --surface-hover:   var(--stone-100);
+  --surface-active:  var(--stone-200);
+
+  /* Borders */
+  --border-subtle:   var(--stone-100);
+  --border-default:  var(--stone-200);
+  --border-strong:   var(--stone-300);
+  --border-focus:    var(--purple-500);
+
+  /* Text */
+  --text-strong:     var(--stone-900);
+  --text-body:       var(--stone-700);
+  --text-muted:      var(--stone-500);
+  --text-subtle:     var(--stone-400);
+  --text-inverse:    var(--stone-0);
+  --text-link:       var(--purple-600);
+
+  /* Accent / primary action */
+  --accent:          var(--purple-500);
+  --accent-hover:    var(--purple-600);
+  --accent-active:   var(--purple-700);
+  --accent-weak:     var(--purple-50);
+  --accent-weak-fg:  var(--purple-700);
+  --accent-fg:       var(--stone-0);
+
+  /* Focus ring */
+  --focus-ring:      color-mix(in srgb, var(--purple-500) 34%, transparent);
+
+  /* ---- Status pills: bg / fg / dot ------------------------ */
+  --status-pending-bg:  var(--stone-100);
+  --status-pending-fg:  var(--stone-600);
+  --status-pending-dot: var(--stone-400);
+
+  --status-sending-bg:  var(--sky-50);
+  --status-sending-fg:  var(--sky-700);
+  --status-sending-dot: var(--sky-500);
+
+  --status-sent-bg:     var(--emerald-50);
+  --status-sent-fg:     var(--emerald-700);
+  --status-sent-dot:    var(--emerald-500);
+
+  --status-failed-bg:   var(--red-50);
+  --status-failed-fg:   var(--red-700);
+  --status-failed-dot:  var(--red-500);
+
+  --status-skipped-bg:  var(--amber-50);
+  --status-skipped-fg:  var(--amber-700);
+  --status-skipped-dot: var(--amber-500);
+
+  /* ---- Log line semantics (send progress feed) ------------ */
+  --log-info:     var(--stone-500);
+  --log-success:  var(--emerald-600);
+  --log-error:    var(--red-600);
+  --log-warning:  var(--amber-600);
+}

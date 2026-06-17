@@ -1,34 +1,44 @@
+import { Button } from "./Button";
+
 export function ConfirmDialog({
   title,
   body,
   confirmLabel = "Confirm",
+  cancelLabel = "Cancel",
+  destructive = true,
   onConfirm,
   onCancel,
 }: {
   title: string;
   body?: string;
   confirmLabel?: string;
+  cancelLabel?: string;
+  destructive?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-xs rounded-lg bg-white p-4 shadow-xl">
-        <h3 className="text-sm font-semibold text-gray-900">{title}</h3>
-        {body && <p className="mt-1 text-xs text-gray-600">{body}</p>}
+    <div
+      className="fixed inset-0 z-50 flex animate-dmq-fade items-center justify-center bg-stone-900/45 p-4"
+      onClick={onCancel}
+    >
+      <div
+        className="w-full max-w-[320px] animate-dmq-pop rounded-xl bg-surface-card p-4 shadow-lg"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h3 className="font-display text-md font-medium text-stone-900">{title}</h3>
+        {body && <p className="mt-1.5 text-xs text-stone-500">{body}</p>}
         <div className="mt-4 flex justify-end gap-2">
-          <button
-            className="rounded-md px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-100"
-            onClick={onCancel}
-          >
-            Cancel
-          </button>
-          <button
-            className="rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+          <Button variant="secondary" size="sm" onClick={onCancel}>
+            {cancelLabel}
+          </Button>
+          <Button
+            variant={destructive ? "danger" : "primary"}
+            size="sm"
             onClick={onConfirm}
           >
             {confirmLabel}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

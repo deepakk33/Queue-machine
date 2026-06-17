@@ -1,0 +1,35 @@
+<!-- @dsCard group="Brand" viewport="700x180" name="Wordmark" subtitle="Typographic lockup — replace with real icon PNGs when available" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 24px; background: var(--surface-card); display:flex; gap:34px; align-items:center; flex-wrap:wrap; }
+  /* App mark: a rounded square holding a stacked-queue glyph built from divs (no SVG) */
+  .mark { width: 46px; height: 46px; border-radius: 11px; background: var(--accent); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; box-shadow: var(--shadow-sm); }
+  .mark i { display:block; height:4px; border-radius:2px; background: var(--slate-0); }
+  .mark i:nth-child(1){ width:22px; opacity:1; }
+  .mark i:nth-child(2){ width:22px; opacity:.7; }
+  .mark i:nth-child(3){ width:14px; opacity:.4; }
+  .lockup { display:flex; align-items:center; gap:12px; }
+  .word { display:flex; flex-direction:column; line-height:1.05; }
+  .word .t { font-family: var(--font-display); font-size: 23px; font-weight: 500; letter-spacing: 0; color: var(--text-strong); }
+  .word .s { font-family: var(--font-mono); font-size: 10px; letter-spacing:0.04em; color: var(--text-muted); margin-top:3px; }
+  .stack { display:flex; flex-direction:column; gap:16px; }
+  .ondark { background: var(--slate-900); padding:16px 20px; border-radius: var(--radius-lg); display:flex; align-items:center; gap:12px; }
+  .ondark .t { color: var(--slate-0); }
+  .ondark .s { color: var(--slate-400); }
+</style>
+</head>
+<body>
+  <div class="lockup">
+    <div class="mark"><i></i><i></i><i></i></div>
+    <div class="word"><span class="t">DM&nbsp;Queue</span><span class="s">for LinkedIn Sales Navigator</span></div>
+  </div>
+  <div class="ondark">
+    <div class="mark"><i></i><i></i><i></i></div>
+    <div class="word"><span class="t">DM&nbsp;Queue</span><span class="s">for LinkedIn Sales Navigator</span></div>
+  </div>
+</body>
+</html>

@@ -21,11 +21,12 @@ Notes: {{notes}}`,
 
 export const SIDE_PANEL_WIDTH = 360;
 
+// Status pill colors — ported from the "Queue" design system (--status-*-{bg,fg,dot}).
 // Literal class strings here so Tailwind's content scan picks them up.
 export const STATUS_COLORS = {
-  pending: { bg: "bg-gray-100", text: "text-gray-600", label: "Pending" },
-  sending: { bg: "bg-blue-100", text: "text-blue-700", label: "Sending" },
-  sent: { bg: "bg-green-100", text: "text-green-700", label: "Sent" },
-  failed: { bg: "bg-red-100", text: "text-red-700", label: "Failed" },
-  skipped: { bg: "bg-amber-100", text: "text-amber-700", label: "Skipped" },
+  pending: { bg: "bg-stone-100", text: "text-stone-600", dot: "bg-stone-400", label: "pending" },
+  sending: { bg: "bg-sky-50", text: "text-sky-700", dot: "bg-sky-500", label: "sending" },
+  sent: { bg: "bg-emerald-50", text: "text-emerald-700", dot: "bg-emerald-500", label: "sent" },
+  failed: { bg: "bg-red-50", text: "text-red-700", dot: "bg-red-500", label: "failed" },
+  skipped: { bg: "bg-amber-50", text: "text-amber-700", dot: "bg-amber-500", label: "skipped" },
 } as const;

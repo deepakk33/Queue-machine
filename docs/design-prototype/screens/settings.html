@@ -1,0 +1,109 @@
+<!-- @dsCard group="Modules" viewport="360x640" name="Settings" subtitle="Delays, retries, prompt template, and Clear all data" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings · DM Queue</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="panel.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  body { margin: 0; display: flex; justify-content: center; padding: 28px; background: var(--surface-sunken); }
+  .set-row { display:flex; align-items:center; justify-content:space-between; gap: var(--space-6); padding: var(--space-5) 0; }
+  .set-row + .set-row { border-top: 1px solid var(--border-subtle); }
+  .set-row__label { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--text-strong); }
+  .set-row__desc { font-size: var(--text-xs); color: var(--text-muted); margin-top:1px; line-height: var(--leading-snug); }
+  .set-row__control { flex-shrink:0; }
+  .delay-pair { display:flex; align-items:center; gap: var(--space-3); }
+  .delay-pair span { font-size: var(--text-xs); color: var(--text-subtle); }
+  .danger-zone { margin-top: var(--space-10); padding: var(--space-6); background: var(--red-50); border:1px solid var(--red-100); border-radius: var(--radius-lg); }
+  .danger-zone h4 { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--red-700); }
+  .danger-zone p { font-size: var(--text-xs); color: var(--red-600); margin:3px 0 var(--space-5); line-height: var(--leading-snug); }
+</style>
+</head>
+<body>
+  <div class="panel" data-screen-label="Settings">
+    <header class="p-header">
+      <button class="p-header__back" aria-label="Back"><i class="ico" data-lucide="arrow-left" style="width:18px;height:18px;"></i></button>
+      <span class="p-title p-title--sm">Settings</span>
+    </header>
+
+    <div class="p-body">
+      <div class="section">
+        <span class="eyebrow">Send pacing</span>
+        <div style="margin-top:var(--space-4);">
+          <div class="set-row">
+            <div>
+              <div class="set-row__label">Delay between sends</div>
+              <div class="set-row__desc">Randomized within this range to stay human-paced.</div>
+            </div>
+            <div class="set-row__control delay-pair">
+              <div class="stepper"><button>−</button><input value="60" /><button>+</button></div>
+              <span>to</span>
+              <div class="stepper"><button>−</button><input value="120" /><button>+</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="eyebrow">Retries</span>
+        <div style="margin-top:var(--space-4);">
+          <div class="set-row">
+            <div>
+              <div class="set-row__label">Auto-retry failed sends</div>
+              <div class="set-row__desc">Re-queue a failure until the max is hit.</div>
+            </div>
+            <div class="set-row__control">
+              <button class="switch switch--on" aria-label="Auto-retry" role="switch" aria-checked="true"><span class="switch__knob"></span></button>
+            </div>
+          </div>
+          <div class="set-row">
+            <div>
+              <div class="set-row__label">Max retries</div>
+              <div class="set-row__desc">0 disables retrying entirely.</div>
+            </div>
+            <div class="set-row__control">
+              <div class="stepper"><button>−</button><input value="2" /><button>+</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="eyebrow">Prompt template</span>
+        <div class="field" style="margin-top:var(--space-4);">
+          <div class="field__row">
+            <span class="field__hint">Used by “Copy context”. Tokens are replaced per prospect.</span>
+          </div>
+          <textarea class="control" rows="6" style="font-size:var(--text-sm);line-height:1.5;">Write a personalized LinkedIn InMail for the following prospect. Keep it under 500 characters including spaces. Make it conversational, skimmable, and direct. No dashes. No fluff.
+
+Name: {{name}}
+Title: {{designation}}
+Company: {{company}}
+Notes: {{notes}}</textarea>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:var(--space-3);">
+            <code class="chip" style="cursor:default;font-family:var(--font-mono);">{{name}}</code>
+            <code class="chip" style="cursor:default;font-family:var(--font-mono);">{{designation}}</code>
+            <code class="chip" style="cursor:default;font-family:var(--font-mono);">{{company}}</code>
+            <code class="chip" style="cursor:default;font-family:var(--font-mono);">{{notes}}</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="danger-zone">
+        <h4>Danger zone</h4>
+        <p>Permanently removes every prospect and resets settings. This cannot be undone.</p>
+        <button class="btn btn--danger btn--sm"><i class="ico" data-lucide="trash-2" style="width:13px;height:13px;"></i>Clear all data</button>
+      </div>
+    </div>
+
+    <footer class="p-footer">
+      <button class="btn btn--primary btn--full"><i class="ico" data-lucide="check"></i>Save settings</button>
+    </footer>
+  </div>
+
+  <script>lucide.createIcons({ attrs: { 'stroke-width': 1.75 } });</script>
+</body>
+</html>

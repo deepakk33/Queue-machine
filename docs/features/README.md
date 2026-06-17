@@ -7,6 +7,7 @@ Per-feature documentation for the LinkedIn DM Queue Chrome extension. The canoni
 | Doc | Covers |
 |---|---|
 | [architecture/01-system-overview.md](architecture/01-system-overview.md) | Contexts (side panel / service worker / content script), data tier, message flow, risks |
+| [architecture/02-design-system.md](architecture/02-design-system.md) | Design system "Queue" — tokens, color/type/status, components, screen mockups (replaces Figma); divergence vs. built UI |
 | [F1 — Prospect Queue](F1-prospect-queue.md) | Add/edit/delete, persistence, status, filter, reorder |
 | [F2 — Message Composition](F2-message-composition.md) | Copy Context / Paste Message clipboard AI flow, template tokens |
 | [F3 — Sending Engine](F3-sending-engine.md) | State machine, send sequence, pause/resume, reconnect |
@@ -27,7 +28,7 @@ Per-feature documentation for the LinkedIn DM Queue Chrome extension. The canoni
 5. **UI components** — side-panel views/components involved
 6. **Edge cases / empty states / error states**
 
-No RBAC matrix and no prototype references (single-user extension, no roles, no prototype HTML).
+No RBAC matrix (single-user extension, no roles). **Design references are now expected** — §5 of each feature doc links its matching screen + components in the [design system](architecture/02-design-system.md) ([docs/design-prototype/](../design-prototype/), which replaces a Figma file).
 
 ## Glossary
 

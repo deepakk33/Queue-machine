@@ -1,0 +1,41 @@
+/* ============================================================
+   TYPOGRAPHY — Geist for UI, Geist Mono for data.
+   The side panel is narrow (~360px) and dense, so the scale
+   is tight: 11px caption up to a 19px view title. Monospace
+   carries timestamps, countdowns, IDs, URLs and the live log.
+   ============================================================ */
+
+:root {
+  /* Families */
+  --font-display: 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
+
+  /* Weights */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* Type scale (px) — compact for a side panel */
+  --text-2xs: 10.5px;  /* micro labels, dot timestamps */
+  --text-xs:  11.5px;  /* captions, meta, badge text */
+  --text-sm:  12.5px;  /* secondary body, form helper */
+  --text-base:13.5px;  /* default body, list rows */
+  --text-md:  15px;    /* card titles, emphasis */
+  --text-lg:  17px;    /* section / form heading */
+  --text-xl:  19px;    /* view title */
+  --text-2xl: 24px;    /* big counters (summary, countdown) */
+  --text-3xl: 34px;    /* hero stat */
+
+  /* Line heights */
+  --leading-tight:  1.2;
+  --leading-snug:   1.35;
+  --leading-normal: 1.5;
+
+  /* Letter spacing */
+  --tracking-tight:   -0.012em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.02em;
+  --tracking-caps:    0.06em;  /* uppercase eyebrows */
+}

@@ -49,13 +49,17 @@ When the docs conflict, requirements wins on *what*, technical-design wins on *h
 
 Three extension contexts coordinated by message passing — Side Panel (React UI) ↔ Background Service Worker (send engine / state machine) ↔ Content Script (DOM actions on linkedin.com); Dexie/IndexedDB data tier. See [docs/features/architecture/01-system-overview.md](docs/features/architecture/01-system-overview.md). Sales Navigator is the primary surface; centralize selectors in `content/dom-selectors.ts`.
 
+## Design system (IMPORTANT)
+
+[docs/design-prototype/](docs/design-prototype/) is the **visual source of truth — it replaces Figma** (design "Queue": warm cream/stone neutrals + dusty purple accent, Fraunces/IBM Plex fonts, five status hues). Tokens in `tokens/`, single entry `styles.css`; React primitives in `components/`; full HTML/CSS screen mockups in `screens/`; also an Agent Skill (`SKILL.md`). Overview + token table + screen↔feature map: [docs/features/architecture/02-design-system.md](docs/features/architecture/02-design-system.md). The built `src/sidepanel/` UI now follows "Queue": tokens are ported into `tailwind.config.js`, fonts are self-hosted via `@fontsource`, icons via `lucide-react`. When building/restyling UI, follow the prototype.
+
 ## Feature docs convention
 
 Every feature is documented in [docs/features/](docs/features/) using the adapted **6-section template — NEVER deviate from the order**:
 
 1. Overview · 2. Sub-features · 3. Data model · 4. Messaging / flow · 5. UI components · 6. Edge cases / empty states / error states
 
-No RBAC matrix, no prototype refs (single-user, no roles, no prototype HTML). When you add or change a feature, create/update its `FX-*.md` doc and add it to [docs/features/README.md](docs/features/README.md). Keep docs in sync with code.
+No RBAC matrix (single-user, no roles). §5 (UI components) **links the matching screen + components in the design system** ([docs/design-prototype/](docs/design-prototype/)). When you add or change a feature, create/update its `FX-*.md` doc and add it to [docs/features/README.md](docs/features/README.md). Keep docs in sync with code.
 
 ## Memory management
 

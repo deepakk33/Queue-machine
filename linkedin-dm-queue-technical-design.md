@@ -1344,10 +1344,10 @@ export default {
 ```bash
 # Clone and install
 cd linkedin-dm-queue
-npm install
+pnpm install
 
 # Start dev server with HMR
-npm run dev
+pnpm dev
 ```
 
 ### Load in Chrome
