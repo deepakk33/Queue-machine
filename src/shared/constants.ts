@@ -4,8 +4,8 @@ import type { Settings } from "./types";
 export const SETTINGS_KEY = "default";
 
 export const DEFAULT_SETTINGS: Settings = {
-  minDelay: 60,
-  maxDelay: 120,
+  minDelay: 20,
+  maxDelay: 45,
   maxRetries: 2,
   autoRetry: true,
   pageLoadTimeout: 15,
