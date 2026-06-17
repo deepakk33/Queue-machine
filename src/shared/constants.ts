@@ -16,6 +16,7 @@ Name: {{name}}
 Title: {{designation}}
 Company: {{company}}
 Company Website: {{companyUrl}}
+Profile URL: {{profileUrl}}
 Notes: {{notes}}`,
 };
 
