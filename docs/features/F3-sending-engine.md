@@ -35,7 +35,9 @@ State machine: `IDLE → RUNNING → SENDING → WAITING → RUNNING → … →
 | Content → Worker | `SEND_SUCCESS`, `SEND_FAILED { reason }`, `STEP_UPDATE { step }` |
 | Worker → Panel | `SEND_STATE_UPDATE { SendProgress }`, `SEND_RUN_COMPLETED { RunSummary }`, `PROSPECT_STATUS_CHANGED` |
 
-Per-prospect sequence (technical-design §6.2, §7.3 `executeSend`): navigate → wait for profile load (`waitForElement`, 15s) → find Message button (`waitForAnyElement`, 10s) → open composer → `simulateTyping` into contenteditable → click send → verify (best-effort) → mark `sent` → delay → next. Keep-alive via `chrome.alarms` (`periodInMinutes: 0.4`); state persisted to IndexedDB for recovery.
+Per-prospect sequence (technical-design §6.2, §7.3 `executeSend`): navigate → wait for profile load (`waitForElement`, 15s) → find Message button (`resolveElement`, 10s) → open composer → `simulateTyping` into contenteditable → click send → verify (best-effort) → mark `sent` → delay → next. Keep-alive via `chrome.alarms` (`periodInMinutes: 0.4`); state persisted to IndexedDB for recovery.
+
+**DOM resolution (resilient).** Surface is detected by URL path (`/sales` → Sales Navigator, else regular LinkedIn fallback). Message button and Send button are resolved by `resolveElement(strategies, timeout)` ([dom-utils.ts](../../src/content/dom-utils.ts)), which tries a **layered strategy list** ([dom-selectors.ts](../../src/content/dom-selectors.ts) `messageButtonStrategies` / `composerInputStrategies` / `sendButtonStrategies`): exact selector → `data-*`/`type` → `aria-label` → visible-text scan (`findClickableByText`, e.g. `/^message$/i`, `/^send$/i`). Text/aria anchors survive LinkedIn's class-name churn, so a class rename no longer breaks a send on its own. `simulateTyping` uses `execCommand("insertText")` so React's input value-tracker registers the text (raw `textContent` sets are dropped by controlled inputs), with a `textContent` + `InputEvent` fallback. Every step emits a `[DMQ]` `console.debug` line naming what it looked for and which strategy hit/failed.
 
 ## 5. UI components
 
@@ -53,3 +55,51 @@ Per-prospect sequence (technical-design §6.2, §7.3 `executeSend`): navigate �
 - Service worker killed → alarms restart it; recover from persisted IndexedDB state.
 - `No active tab found` (user closed all tabs) → run halts, resumable.
 - Send verification is fragile by design — if verify can't confirm but the send click executed, treat as success (technical-design §7.3). Per-step failures route to [F4](F4-failure-retry.md). Full error table: technical-design §14.
+
+### Selector validation procedure
+
+Selectors can't be read from Claude's side (no live LinkedIn session), so verification is a capture loop:
+
+1. On a real Sales Navigator lead page (`linkedin.com/sales/lead/…`), open DevTools console and run the capture snippet below. It auto-copies a JSON dump of every Message/Send/InMail candidate (text, aria, class, `data-*`, role) plus all editables.
+2. Run it twice: once on the lead page (Message button), once after the composer opens (composer input + Send button).
+3. Paste both dumps back; the exact `data-*`/class anchors become the first strategy in each list in [dom-selectors.ts](../../src/content/dom-selectors.ts).
+4. When a send still misses, the `[DMQ]` console line names the failed step → re-capture there → refine. Iterate until a real send lands.
+
+```js
+(() => {
+  const dump = el => ({
+    tag: el.tagName.toLowerCase(),
+    text: (el.innerText || el.textContent || '').trim().slice(0, 50),
+    aria: el.getAttribute('aria-label'),
+    cls: el.className,
+    role: el.getAttribute('role'),
+    type: el.getAttribute('type'),
+    data: Object.fromEntries([...el.attributes]
+      .filter(a => a.name.startsWith('data-'))
+      .map(a => [a.name, a.value])),
+  });
+  const out = {
+    url: location.href,
+    path: location.pathname,
+    candidates: [...document.querySelectorAll('button, a, [role=button]')]
+      .filter(el => /message|send|inmail|connect/i.test(
+        (el.innerText || '') + ' ' + (el.getAttribute('aria-label') || '')))
+      .map(dump),
+    editables: [...document.querySelectorAll(
+      '[contenteditable=true], [role=textbox], textarea')].map(dump),
+  };
+  console.log(JSON.stringify(out, null, 2));
+  try { copy(JSON.stringify(out, null, 2)); } catch {}
+  return out;
+})();
+```
+
+**Status:** `SN_SELECTORS` verified against a live Sales Navigator lead page (2026-06-17). Confirmed: Message CTA = `button[aria-label*="Message"]` / `[data-anchor-send-inmail]` (a hidden sticky-header duplicate also matches — `qv()` picks the visible one); composer = a `<textarea aria-label="Type your message here…">` (NOT contenteditable); Send = the button with visible text "Send". A full send (navigate → Message → textarea → type → Send) lands a real InMail.
+
+### Known limitations (future work)
+
+Tracked here so they aren't mistaken for regressions; not yet fixed:
+
+1. **`No active tab found` when Chrome unfocused.** `tab-manager.navigateAndWait` queries `{active: true, currentWindow: true}`; if Chrome has no focused window/tab the query is empty and the send fails. Future: target a specific captured tab id instead of "the active tab".
+2. **Sends into whatever tab is active.** The engine drives the current active tab. If the user switches to a non-Sales-Navigator tab mid-run, the next navigate/send happens there. Future: pin sends to a dedicated Sales Navigator tab (open/reuse one); if the active surface isn't Sales Navigator, pause/skip rather than act on the wrong page.
+3. **One-click prospect autofill (new feature).** Scrape the open Sales Nav lead page for name, profile URL, role/designation, company, company URL, etc. in one click; leave any field blank when it can't be found. Would populate the Add-prospect form from the live DOM (reuses the `dom-selectors` layer).
